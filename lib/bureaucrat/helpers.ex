@@ -21,14 +21,14 @@ defmodule Bureaucrat.Helpers do
   defmacro doc_connect(
              handler,
              params,
-             connect_info \\ quote(do: %{})
+             options \\ quote(do: [])
            ) do
     if endpoint = Module.get_attribute(__CALLER__.module, :endpoint) do
       quote do
         {status, socket} =
-          unquote(Phoenix.ChannelTest).__connect__(unquote(endpoint), unquote(handler), unquote(params), unquote(connect_info))
+          unquote(Phoenix.ChannelTest).__connect__(unquote(endpoint), unquote(handler), unquote(params), unquote(options))
 
-        doc({status, socket, unquote(handler), unquote(params), unquote(connect_info)})
+        doc({status, socket, unquote(handler), unquote(params), unquote(options)})
         {status, socket}
       end
     else
